@@ -1,0 +1,670 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+<head>
+
+  <style type="text/css">
+     body {
+        font-family: 'Signika', sans-serif;
+     }
+     .bg-grey {
+        background: #292929;
+     }
+     .logo-footer {
+        margin-bottom: 40px;
+     }
+     footer {
+            color: grey;
+     }
+     footer p, a {
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+}
+footer h6 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 40px;
+    position: relative;
+}
+footer h6:after {
+    position: absolute;
+    content: "";
+    background: grey;
+    width: 12%;
+    height: 1px;
+    left: 0;
+    bottom: -20px;
+}
+     .btn-footer {
+                 color: grey;
+              
+                text-decoration: none;
+                border: 1px solid;
+                border-radius: 43px;
+                font-size: 13px;
+                padding: 7px 30px;
+                line-height: 47px;
+     }
+     .btn-footer:hover {
+                
+                text-decoration: none;
+               
+     }
+    .form-footer input[type="text"] {
+        border: none;
+    border-radius: 16px 0 0 16px;
+    outline: none;
+    padding-left: 10px;
+    
+}
+::placeholder {
+    font-size: 10px;
+    padding-left: 10px;
+    font-style: italic;
+}
+ .form-footer input[type="button"] {
+    border: none;
+    background:#232323;
+        margin-left: -5px;
+    color: #fff;
+    outline: none;
+    border-radius: 0 16px 16px 0;
+    padding: 2px 12px;
+}
+     .social .fa {
+    color: grey;
+    font-size: 22px;
+    padding: 10px 15px;
+    background: #3c3c3c;
+}
+     footer ul li {
+    list-style: none;
+    display: block;
+}
+  footer ul  {
+   padding-left: 0;
+}
+footer ul  li a{
+  text-decoration: none;
+  color: grey;
+  text-decoration:none;
+}
+a:hover {
+    text-decoration: none;
+    color: #f5f5f5 !important;
+    
+}
+.logo-part {
+    border-right: 1px solid grey;
+    height: 100%;
+    }
+
+    .col-md-2, .col-md-10{
+    padding:0;
+}
+.panel{
+    margin-bottom: 0px;
+}
+.chat-window{
+    bottom:0;
+    position:fixed;
+    float:right;
+    margin-left:10px;
+}
+.chat-window > div > .panel{
+    border-radius: 5px 5px 0 0;
+}
+.icon_minim{
+    padding:2px 10px;
+}
+.msg_container_base{
+  background: #e5e5e5;
+  margin: 0;
+  padding: 0 10px 10px;
+  max-height:300px;
+  overflow-x:hidden;
+}
+.top-bar {
+  background: #666;
+  color: white;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.msg_receive{
+    padding-left:0;
+    margin-left:0;
+}
+.msg_sent{
+    padding-bottom:20px !important;
+    margin-right:0;
+}
+.messages {
+  background: white;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  max-width:100%;
+}
+.messages > p {
+    font-size: 13px;
+    margin: 0 0 0.2rem 0;
+  }
+.messages > time {
+    font-size: 11px;
+    color: #ccc;
+}
+.msg_container {
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+}
+img {
+    display: block;
+    width: 100%;
+}
+.avatar {
+    position: relative;
+}
+.base_receive > .avatar:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid #FFF;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.base_sent {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.base_sent > .avatar:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid white;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    box-shadow: 1px 1px 2px rgba(black, 0.2); // not quite perfect but close
+}
+
+.msg_sent > time{
+    float: right;
+}
+
+
+
+.msg_container_base::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.msg_container_base::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.msg_container_base::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+.btn-group.dropup{
+    position:fixed;
+    left:0px;
+    bottom:0;
+}
+.container1{
+    position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  right: 0;
+  
+}
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+	<!-- <title>SpaCify</title> -->
+	 <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/custom.css')}}">
+</head>
+<body>
+{% block navbar %}
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#" style="font-size: 20px;">Terms of Service Summarizer</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto" style="font-size: 20px;">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{url_for('index')}}">Home <span class="sr-only">(current)</span></a>
+          </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="{{url_for('doc')}}">View Tagged File</a>
+          </li>
+        </ul>
+        
+      </div>
+    </nav>
+
+    {% endblock %}
+    <br/>
+    <br/>
+     <br/>
+    <br/>
+
+      <div class="jumbotron">
+        <div class="container">
+          <div class="col-md-4" style="border-right: 1px solid #4ab2c7;">
+        <h3>TOS</h3>
+        <p class="lead">Terms of Service Summarizer.</p>
+        <a class="btn btn-lg btn-primary" href="{{url_for('index')}}" role="button">Refresh</a>
+      </div>
+      <div class="col-md-8" style="padding-left: 2px; margin:2px;"></div>
+      <p>We are a group of young developers striving to give back to the community to the best of out capabilities. We present unto you, our latest innovation in the sector of consumer development. <br>The TERMS OF SERVICE SUMMARIZER!</p>
+      </div>
+    </div>
+
+    <div class="container" style="font-size:20px">
+      <p>Enter Your Text Below</p>
+    	<form class="form-group mt-2 mt-md-0" method="POST" action="/analyze">
+         <textarea name="rawtext" cols="7" rows="9" class="form-control" required="true" style="font-size:15px"></textarea>
+         <br/>
+         <button class="btn btn-outline-success " type="reset" style="font-size:15px">Clear</button>
+          <button class="btn btn-outline-primary " type="submit" style="font-size:15px">Submit</button>
+        </form>
+    </div>
+    <br>
+<hr width="70%" align="center">
+<br>
+      <div class="container" style="font-size:20px">
+        <div class="col-md-4">
+          <p>File Upload</p>
+          <form method="POST" class="form-group mt-2 mt-md-0" action="/analyze2" enctype="multipart/form-data">
+          <!-- COMPONENT START -->
+          <div class="form-group">
+            <div class="input-group input-file" name="Fichier1">
+             <!--  <span class="input-group-btn">
+                  <button class="btn btn-default btn-choose" type="button">Choose</button>
+              </span> -->
+              <input type="file" class="" name="file" placeholder='Choose a file...' />
+              <!-- <span class="input-group-btn">
+                  <button class="btn btn-warning btn-reset" type="button">Reset</button>
+              </span> -->
+        <!--       {{ name }} -->
+            </div>
+        </div>
+        <!-- COMPONENT END -->
+        <div class="form-group">
+          <button class="btn btn-outline-success " type="reset" style="font-size:15px">Clear</button>
+           <button class="btn btn-outline-primary " type="submit" style="font-size:15px">Submit</button>
+        </div>
+      </form>
+      </div>
+      <div class="col-md-4">
+        <p align="center" style="font-size: 20px; padding-top: 10px;"> - O R - </p>
+      </div>
+      <div class = "col-md-4">
+        <p>Paste URL:</p>
+        <form method="POST" class="form-group mt-2 mt-md-0" action="/analyze1">
+          <!-- COMPONENT START -->
+          <div class="form-group">
+            <div class="input-group input-file" name="Fichier1">
+ <!--              <span class="input-group-btn">
+                  <button class="btn btn-default btn-choose" type="button">Choose</button>
+              </span> -->
+              <input type="text" name="url" class="form-control" placeholder='Paste URL' />
+              <!-- <span class="input-group-btn">
+                  <button class="btn btn-warning btn-reset" type="button">Reset</button>
+              </span> -->
+            </div>
+        </div>
+        <!-- COMPONENT END -->
+        <div class="form-group">
+          <button class="btn btn-outline-success " type="reset" style="font-size:15px">Clear</button>
+           <button class="btn btn-outline-primary " type="submit" style="font-size:15px">Submit</button>
+        </div>
+      </form>
+      </div>
+      </div>
+{% if final_time or value1%}
+
+      <!-- Analysis Begins Here -->
+    <div class="container" style="font-size:20px">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Your Text was</h2>    
+          <div class="alert alert-info" role="alert" style="font-size:10px"><p>{{ctext}}</p></div>
+            <div class="alert alert-info" role="alert" style="font-size:15px"><p>Time Elapsed: <span style="color:#0091EA;">{{ final_time }} </span></p>
+        </div>
+      
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="container" style="font-size: 15px;"><h1>Results </h1>
+<div id="exTab1" class="container">	
+<ul  class="nav nav-pills">
+			<li class="active">
+			<a  href="#1a" data-toggle="tab">Important Phrases<!-- <a></a> --></a>
+			</li>
+			<li><a href="#1b" data-toggle="tab">Terms of Interest<!-- <a></a> --></a>
+			</li>
+			<!-- <li><a href="#2a" data-toggle="tab">Notable Figures<a></a></a>
+			</li> -->
+			<li><a href="{{ url_for('.download_file') }}">View Tagged Document</a>
+			</li>
+			<li><a href = "http://172.17.232.199:8501">Comprehensive Analysis</a>
+			</li>
+		</ul>
+
+		  <div class="tab-content clearfix">
+			  <div class="tab-pane active" id="1a">
+			  <h3>Important Phrases</h3>
+			  {% for item in custom_tokens %}
+			  <li><b>{{item}}</b></li>
+			  {% endfor %}
+			  </div>
+			  
+			  
+			  
+			  <div class="tab-pane" id="1b">
+			  <h3>Terms of Interest</h3>
+			  {% for item in custom_postagging %}
+			  
+			  <li><b>{{item}}</b></li>
+			  {% endfor %}
+			  </div>
+			  
+     
+			<!--   
+			  <div class="tab-pane" id="2a">
+			  <h3>Very Important Terms</h3>
+			  {% for item in custom_namedentities %}
+			  <li><b>{{item}}</b></li>
+			  {% endfor %}
+			  </div>
+		 -->
+		<div class="tab-pane" id="3a">
+          <h3>Summary</h3>
+            <div class="container">
+           <!-- Parts of Speech Tagging  -->
+          <div class="card-footer text-muted">
+                <table class="table table-striped table-hover table-dark" >
+                    
+                <thead>
+                 
+                  <span style="color:white">"""{{custom_wordinfo}}"""</span>
+                </thead>
+                </table>
+
+              </div></div>
+
+  </div>
+</div>
+
+
+
+<div class="container1">
+    <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
+        <div class="col-xs-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                    <div class="col-md-8 col-xs-8">
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Legal Boi</h3>
+                    </div>
+                    <div class="col-md-4 col-xs-4" style="text-align: right;">
+                        <a href="#"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+                        <!-- <a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a> -->
+                    </div>
+                </div>
+                <div class="panel-body msg_container_base">
+                    <div class="row msg_container base_sent">
+                        <div class="col-md-10 col-xs-10">
+                            <div class="messages msg_sent" style="overflow: scroll;">
+                                <p>Your query... {{value1}}</p>
+                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xs-2 avatar">
+                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                        </div>
+                    </div>
+                    <div class="row msg_container base_receive">
+                        <div class="col-md-2 col-xs-2 avatar">
+                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                        </div>
+                        <div class="col-md-10 col-xs-10">
+                            <div class="messages msg_receive" style="overflow: scroll;">
+                                <p>Our support... {{value2}}</p>
+                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                            </div>
+                        </div>
+                    </div>
+                 <div class="panel-footer">
+                    <div class="input-group">
+                    <form id = "uploadForm" action="/ask" method = "POST">
+                        <input name="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your query here..." />
+                        <span class="input-group-btn">
+                        <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="btn-group dropup">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-cog"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" id="new_chat"><span class="glyphicon glyphicon-plus"></span> Novo</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-list"></span> Ver outras</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Fechar Tudo</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Invisivel</a></li>
+        </ul>
+    </div>
+</div>
+<!-- End of Main Container -->   {% endif %}
+<br/>
+<br/>
+<br>
+<br><br>
+
+{% if not final_time or not value1%}
+<footer class="container-fluid bg-grey py-5">
+<div class="container">
+   <div class="row">
+      <div class="col-md-6">
+         <div class="row">
+            <div class="col-md-6 ">
+               <div class="logo-part">
+                  <!-- <img src="/home/sam/Downloads/New_Project.png" class="w-50 logo-footer" > -->
+                  <b><p style="font-size: 15px;">Team members:</p></b>
+                  <p>Shrawan Sai</p>
+                  <p>Aditi Aravind</p>
+                  <p>Aryan Jain</p>
+                  <p>Samarth Nair</p>
+               </div>
+            </div>
+            <div class="col-md-6 px-4">
+               <h6> About Company</h6>
+               <p>But horizontal lines can only be a full pixel high.</p>
+               <a href="#" class="btn-footer"> More Info </a><br>
+               <a href="#" class="btn-footer"> Contact Us</a>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6">
+         <div class="row">
+            <div class="col-md-6 px-4">
+               <h6> Help us</h6>
+               <div class="row ">
+                  <div class="col-md-6">
+                     <ul>
+                        <li> <a href="#"> Home</a> </li>
+                        <li> <a href="#"> About</a> </li>
+                        <li> <a href="#"> Service</a> </li>
+                        <li> <a href="#"> Team</a> </li>
+                        <li> <a href="#"> Help</a> </li>
+                        <li> <a href="#"> Contact</a> </li>
+                     </ul>
+                  </div>
+                  <div class="col-md-6 px-4">
+                     <ul>
+                        <li> <a href="#"> Cab Faciliy</a> </li>
+                        <li> <a href="#"> Fax</a> </li>
+                        <li> <a href="#"> Terms</a> </li>
+                        <li> <a href="#"> Policy</a> </li>
+                        <li> <a href="#"> Refunds</a> </li>
+                        <li> <a href="#"> Paypal</a> </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-6 ">
+               <h6> Newsletter</h6>
+               <div class="social">
+                  <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                  <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+               </div>
+               <form class="form-footer my-3">
+                  <input type="text"  placeholder="search here...." name="search">
+                  <input type="button" value="Go" >
+               </form>
+               <p>That's technology limitation of LCD monitors</p>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+{% endif %}
+
+  <!-- <span class="badge badge-success">2</span>
+<span class="badge badge-warning">4</span>
+<span class="badge badge-red">6</span>
+<span class="badge badge-info">8</span>
+<span class="badge badge-inverse">10</span>
+
+  --><!-- 
+  <img src="/home/sam/Desktop/timetable.png" class="w-50 logo-footer" alt="tt"> -->
+</body>
+{% endblock %}
+
+{% block styles %}
+{{super()}} <!-- Allows Javascripts and other styles to be inclusive in bootstrap -->
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+{% endblock %}
+
+
+{% block scripts %}
+
+{{ super() }}
+<script>
+$(document).on('click', '.panel-heading span.icon_minim', function (e) {
+    var $this = $(this);
+    if (!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.removeClass('glyphicon-minus').addClass('glyphicon-plus');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+$(document).on('focus', '.panel-footer input.chat_input', function (e) {
+    var $this = $(this);
+    if ($('#minim_chat_window').hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $('#minim_chat_window').removeClass('panel-collapsed');
+        $('#minim_chat_window').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+$(document).on('click', '#new_chat', function (e) {
+    var size = $( ".chat-window:last-child" ).css("margin-left");
+     size_total = parseInt(size) + 400;
+    alert(size_total);
+    var clone = $( "#chat_window_1" ).clone().appendTo( ".container" );
+    clone.css("margin-left", size_total);
+});
+$(document).on('click', '.icon_close', function (e) {
+    //$(this).parent().parent().parent().parent().remove();
+    $( "#chat_window_1" ).remove();
+});
+
+</script>
+{% if value1 %}
+
+
+<script>
+
+$(document).ready(function(){
+    console.log("in");
+/*$('<div class="row msg_container base_sent"><div class="col-md-10 col-xs-10"><div class="messages msg_sent"><p>Hello1</p><time datetime="2009-11-13T20:00">Timothy • 51 min</time></div></div><div class="col-md-2 col-xs-2 avatar"><img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="" img-responsive "></div></div></div><div class="row msg_container base_receive"><div class="col-md-2 col-xs-2 avatar"><img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="" img-responsive "></div><div class="col-xs-10 col-md-10"><div class="messages msg_receive"><p></p><time datetime="2009-11-13T20:00">Timothy • 51 min</time></div></div>').prependTo('.panel-footer');*/
+console.log("inside");
+});
+/*$(document).ready(function(){
+$( '.msg_container_base' ).insertAfter('<div class="panel-body msg_container_base">
+                    <div class="row msg_container base_sent">
+                        <div class="col-md-10 col-xs-10">
+                            <div class="messages msg_sent">
+                                <p>{{value1}}</p>
+                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xs-2 avatar">
+                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="" img-responsive ">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row msg_container base_receive">
+                        <div class="col-md-2 col-xs-2 avatar">
+                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="" img-responsive ">
+                        </div>
+                        <div class="col-xs-10 col-md-10">
+                            <div class="messages msg_receive">
+                                <p>{{value2}}</p>
+                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                            </div>
+                        </div>
+                 </div>')
+             });*/
+
+</script>
+{% endif %}
+
+{% endblock %}
