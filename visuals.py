@@ -11,10 +11,40 @@ from pdfminer.converter import XMLConverter, HTMLConverter, TextConverter
 from pdfminer.layout import LAParams
 import io
 import pandas as pd
+import questionable_clauses
+import getImpPhrases
+from os import path
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud,STOPWORDS
+from gensim.summarization import summarize
+from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
+from sklearn.decomposition import LatentDirichletAllocation
+import pandas as pd
+
+import numpy as np
+import pyLDAvis
+import pyLDAvis.sklearn
+#pyLDAvis.enable_notebook()
+from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS
 
 
 
 
+
+#intro
+st.title("Welcome to comprehensive understanding section")
+
+st.header("Here you can see the Topic Modelling, Wordcloud and the summary of the TOS")
+st.subheader("Below is the input text")
+
+
+
+
+
+#GET TEXT FROM PDF
+@st.cache
 def pdfparser(data):
 
     fp = open(data, 'rb')
@@ -34,35 +64,30 @@ def pdfparser(data):
     return data
 
 
+#EXTRACT IMPORTANT PHRASES
+@st.cache
+def importants(texts):
+	impsents=getImpPhrases.getImpPhrases(texts)
+	print('\n\n\n7654566543\n\n\n')
+	print(impsents)
+	print('\n\n\n7654566543\n\n\n')
+	sents=questionable_clauses.predict(impsents)
+	return sents
+
+
+
+#READ FILE TEXT
 f=open('current.txt','r')
-n=f.read().rstrip()
+n=f.read()
 
 text=pdfparser(n)
-
-
-
-
-
-
-
-
-st.title("Welcome to comprehensive understanding section")
-
-# Header/Subheader
-st.header("Here you can see the Topic Modelling, Wordcloud and the summary of the TOS")
-st.subheader("Below is the input text")
-
-
-
 f.close()
-
-from gensim.summarization import summarize
-
 
 textc=text
 text=text.split()
 
 
+#TO PRINT PROPERLY
 @st.cache
 def normalize(text):
 	c=""""""
@@ -76,7 +101,6 @@ def normalize(text):
 	return text
 
 text=normalize(text)
-#text=' '.join(text)
 
 dubby2=text
 dubby=dubby2.split()
@@ -84,29 +108,45 @@ dubby=dubby2.split()
 st.text(dubby2)
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-gen_sum=summarize(text, split=True)
 
 
 
 
+#GET IMPORT SETENCES
+@st.cache
+def fetchsents(text):
+
+
+	text=sent_tokenize(text)
+
+	sents=questionable_clauses.predict(text)
+	return sents
 
 
 
-# In[53]:
+
+#CLAUSES
+rets=importants(textc)
+bad=rets[0]
+good=rets[1]
+score=rets[2]
 
 
+baddf=pd.DataFrame(bad.items(), columns=['Clause Senetnce', 'Class of Clause'])
+st.header('Questionable Clauses')
 
+st.table(baddf)
 
     
 
-
-# In[44]:
-
+#SUMMARY
 
 st.header('Summary')
 
-if st.checkbox("Summary"):
-	#location = st.multiselect("View Summary",("General","Add ratio","Add maximum wordlimit"))
+
+def summary():
+	gen_sum=summarize(text, split=True)
+		#location = st.multiselect("View Summary",("General","Add ratio","Add maximum wordlimit"))
 	location = st.radio("View Summary",("General","Add ratio","Add maximum wordlimit"))
 	if location=='General':
 		gen_sum=normalize(gen_sum)
@@ -125,22 +165,29 @@ if st.checkbox("Summary"):
 		summ=summarize(text, word_count=level)
 		st.warning(summ)
 
+if st.checkbox("Summary"):
+	summary()
 
 
+if score<0:
+	printed='Good'+str(score)
+else:
+	printed='BAD'+str(score)
 
-from os import path
-from PIL import Image
-import numpy as np
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud,STOPWORDS
-d = path.dirname(__name__)
-text = textc
+st.header('Overall:'+printed)
 
-alice_mask = np.array(Image.open(path.join(d, "nigeria.png")))
-stopwords = set(STOPWORDS)
-wc = WordCloud(background_color="black", max_words=2000, mask=alice_mask,stopwords=stopwords)
-wc.generate(text)
-wc.to_file(path.join(d, "alice.png"))
+@st.cache
+def wordcloud(textc):
+	d = path.dirname(__name__)
+	text = textc
+
+	alice_mask = np.array(Image.open(path.join(d, "nigeria.png")))
+	stopwords = set(STOPWORDS)
+	wc = WordCloud(background_color="black", max_words=2000, mask=alice_mask,stopwords=stopwords)
+	wc.generate(text)
+	wc.to_file(path.join(d, "alice.png"))
+	
+wordcloud(textc)
 
 st.header("Wordcloud")
 if st.checkbox("Display Wordcloud"):
@@ -149,16 +196,7 @@ if st.checkbox("Display Wordcloud"):
 
 
 
-#@st.cache
-from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
-from sklearn.decomposition import LatentDirichletAllocation
-import pandas as pd
-
-import numpy as np
-import pyLDAvis
-import pyLDAvis.sklearn
-#pyLDAvis.enable_notebook()
-from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS
+#
 vect=CountVectorizer(ngram_range=(1,1),stop_words='english')
 dtm=vect.fit_transform(dubby)
 df=pd.DataFrame(dtm.toarray(),columns=vect.get_feature_names())
