@@ -1,3 +1,4 @@
+<pre>
 # Terms-Of-Service-Summarizer-python-
 Terms of Service summarising application using flask
 
@@ -28,3 +29,4 @@ hello... I know... the code is very messy... We'll try fixing that in our next c
 Content for future commits:
   requirements.txt file - should contain module requirements
   explanation.txt file - explain all important files and general flow
+</pre>
