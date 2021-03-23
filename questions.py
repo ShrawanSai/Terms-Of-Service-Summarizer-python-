@@ -14,12 +14,12 @@ def question(text,query):
 	n = 4 
 	# using list comprehension 
 	final = [test[i * n:(i + 1) * n] for i in range((len(test) + n - 1) // n )]  
-	tits=[]
+	title_s=[]
 	for j in range(len(final)):
-	    tits.append(f'Title{j}')
+	    title_s.append(f'Title{j}')
 	
 
-	data=[tits,final]
+	data=[title_s,final]
 	df3=pd.DataFrame(data=data)
 	df3=df3.transpose()
 	df3.columns=['title','paragraphs']
